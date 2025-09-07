@@ -1,0 +1,57 @@
+.article-title {
+    font-weight: bold;
+    font-size: 1rem;
+    margin-top: 0.5rem;
+}
+
+.article-desc {
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+}
+
+.logo {
+    font-family: 'Arial Black', Gadget, sans-serif;
+    font-size: 2rem;
+    color: #0080ff;
+    font-weight: 900;
+}
+
+.footer {
+    background-color: #222;
+    color: #aaa;
+    padding: 1rem 0;
+    text-align: center;
+    font-size: 0.875rem;
+}
+
+.search-icon {
+    font-size: 1.25rem;
+    color: #333;
+    cursor: pointer;
+}
+
+/* Smaller image sizes and spacing for article list on right column */
+.right-col .article-thumb {
+    max-width: 100%;
+    height: auto;
+}
+
+.right-col .article-item {
+    margin-bottom: 1.1rem;
+    display: flex;
+    gap: 0.75rem;
+}
+
+.right-col .article-text {
+    flex-grow: 1;
+}
+
+.right-col .article-title {
+    font-size: 0.9rem;
+    margin: 0;
+}
+
+.right-col .article-desc {
+    font-size: 0.75rem;
+    color: #666;
+}
