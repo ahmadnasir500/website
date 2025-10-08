@@ -32,5 +32,7 @@ class PostSeeder extends Seeder
         foreach($items as $item){
             Post::factory()->create($item);
         }
+
+        Post::factory(50)->create();
     }
 }

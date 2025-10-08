@@ -1,6 +1,9 @@
 <?php
 
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\PostController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 /*
@@ -14,5 +17,15 @@ use Inertia\Inertia;
 |
 */
 
+Route::get('/login',[AuthController::class,'login'])->name('login');
+Route::post('/login',[AuthController::class,'authenticate']);
+
+Route::group(['middleware' => ['auth'],'prefix' => 'dashboard'], function () {
+    Route::get('/', [AdminController::class,'index'])->name('dashboard');
+    Route::resource('/post', PostController::class);
+    Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+});
+
 Route::get('/', [HomeController::class,'index']);
-Route::get('/{key}',[HomeController::class,'show']);
+Route::get('/news/{key}',[HomeController::class,'show']);
+

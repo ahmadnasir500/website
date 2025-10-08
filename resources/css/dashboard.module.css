@@ -1,0 +1,149 @@
+body {
+  font-size: .875rem;
+}
+
+.feather {
+  width: 16px;
+  height: 16px;
+}
+
+/*
+   * Sidebar
+   */
+
+.sidebar {
+  position: fixed;
+  top: 0;
+  /* rtl:raw:
+    right: 0;
+    */
+  bottom: 0;
+  /* rtl:remove */
+  left: 0;
+  z-index: 100;
+  /* Behind the navbar */
+  padding: 48px 0 0;
+  /* Height of navbar */
+  box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
+  overflow-y: auto;
+  /* Membuat sidebar dapat discroll */
+  scroll-behavior: smooth;
+  /* Efek scroll yang halus */
+}
+
+.sidebar::-webkit-scrollbar {
+  display: none;
+  /* Menghilangkan scrollbar */
+}
+
+
+@media (max-width: 767.98px) {
+  .sidebar {
+    top: 5rem;
+  }
+}
+
+.sidebar-sticky {
+  position: relative;
+  top: 0;
+  height: calc(100vh - 48px);
+  padding-top: .5rem;
+  overflow-x: hidden;
+  overflow-y: auto;
+  /* Scrollable contents if viewport is shorter than content. */
+}
+
+.sidebar .nav-link {
+  font-weight: 500;
+  color: #333;
+}
+
+.sidebar .nav-link .feather {
+  margin: 4px;
+  color: #727272;
+}
+
+.sidebar .nav-link.active {
+  color: #2470dc;
+}
+
+.sidebar .nav-link:hover .feather,
+.sidebar .nav-link.active .feather {
+  color: inherit;
+}
+
+.sidebar-heading {
+  font-size: .75rem;
+}
+
+.sidebar .submenu {
+  display: none;
+  padding-left: 20px;
+  border-left: 2px solid rgba(25, 135, 84,1); /* Garis border di kiri */
+  margin-left: 10px; /* Margin untuk jarak dari item induk */
+  list-style-type: none;
+}
+
+.sidebar .submenu .nav-link {
+  /* padding: 10px; */
+  /* Tambahkan padding untuk submenu */
+  color: #555;
+  /* Warna teks submenu */
+  border-bottom: 1px solid #e9e9e9;
+}
+.sidebar .submenu li:last-child {
+  border-bottom: none;
+}
+
+.sidebar .submenu .nav-link:hover {
+  background-color: #d1e7dd;
+  /* Warna latar saat hover pada submenu */
+}
+
+/*
+   * Navbar
+   */
+.navbar-brand {
+  padding-top: .75rem;
+  padding-bottom: .75rem;
+  background-color: rgba(0, 0, 0, .25);
+  box-shadow: inset -1px 0 0 rgba(0, 0, 0, .25);
+}
+
+.navbar {}
+
+.navbar .navbar-toggler {
+  top: .25rem;
+  right: 1rem;
+}
+
+.navbar .form-control {
+  padding: .75rem 1rem;
+}
+
+.form-control-dark {
+  color: #fff;
+  background-color: rgba(255, 255, 255, .1);
+  border-color: rgba(255, 255, 255, .1);
+}
+
+.form-control-dark:focus {
+  border-color: transparent;
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, .25);
+}
+
+.list {
+  border: 1px solid #fff;
+  padding: 5px;
+}
+
+.pagination {
+  display: flex;
+  border: 1px solid #fff;
+  justify-content: space-between;
+  padding: 20px;
+}
+
+.pagination button {
+  padding: 10px;
+}

@@ -13,15 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('posts', function (Blueprint $table) {
+        Schema::create('websites', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->string('title');
-            $table->string('slug')->unique();
-            $table->text('excerpt');
-            $table->text('body');
-            $table->text('img_tmb')->nullable();
-            $table->boolean('is_published')->nullable()->default(0);
+            $table->string('name');
+            $table->string('ads')->enum(['none','aggressive','moderate','light'])->default('none');
+            $table->text('description')->nullable();
             $table->timestamps();
         });
     }
@@ -33,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('posts');
+        Schema::dropIfExists('websites');
     }
 };

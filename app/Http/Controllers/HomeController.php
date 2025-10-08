@@ -4,43 +4,56 @@ namespace App\Http\Controllers;
 
 use App\Models\Post;
 use Artesaos\SEOTools\Facades\SEOMeta;
+use Artesaos\SEOTools\Facades\SEOTools;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
 class HomeController extends Controller
 {
 
-    function meta()
-    {
-        return [
-            'title' => 'halaman',
-            'description'  => 'For those who helped create the Genki Dama', // set false to total remove
-            'separator'    => ' - ',
-            'keywords'     => [],
-            'canonical'    => false, // Set to null or 'full' to use Url::full(), set to 'current' to use Url::current(), set false to total remove
-            'robots'       => false, // Set to 'all', 'none' or any combination of index/noindex and follow/nofollow
-        ];
-    }
     function index()
     {
-        $meta = $this->meta();
-        $meta['title'] = 'halaman beranda';
-        $meta['description'] = 'halaman beranda';
 
-        $datas["data"] = Post::all();
-        $datas["website"] = $meta;
+        $post = Post::where('is_published', true)
+            ->orderBy('created_at', 'desc')
+            ->paginate(5);
+
+        SEOTools::setTitle("Gtmov.xyz");
+        SEOTools::setDescription("website seputar teknologi dan finansial");
+
+        $datas['dataminimal'] = Post::where('is_published', true)
+            ->orderBy('created_at', 'desc')
+            ->limit(3)
+            ->get();
+        $datas["datas"] = $post;
+        $datas["seo"] = [
+            'title' => SEOMeta::getTitle(),
+            'description' => SEOMeta::getDescription(),
+            'keywords' => SEOMeta::getKeywords(),
+            'canonical' => SEOMeta::getCanonical(),
+        ];
+
         return Inertia::render('Guest/Index', $datas);
     }
 
-    public function show($slug)
+    public function show($slug, Request $request)
     {
-        $datas['data'] = Post::where('slug', $slug)->first();
+        $post = Post::where('slug', $slug)->first();
+        SEOTools::setTitle($post->title);
+        SEOTools::setDescription(substr(strip_tags($post->excerpt), 0, 160));
 
-        $meta = $this->meta();
-        $meta['title'] = 'halaman beranda';
-        $meta['description'] = $datas['data']->excerpt;
-        $datas["website"] = $meta;
-
+        $datas['data'] = $post;
+        $datas['url'] = $request->url ?? null;
+        $datas['dataminimal'] = Post::where('is_published', true)
+            ->orderBy('created_at', 'desc')
+            ->limit(3)
+            ->get();
+        $datas["seo"] = [
+            'title' => SEOMeta::getTitle(),
+            'description' => SEOMeta::getDescription(),
+            'keywords' => SEOMeta::getKeywords(),
+            'canonical' => SEOMeta::getCanonical(),
+        ];
         return Inertia::render('Guest/Show', $datas);
     }
 }

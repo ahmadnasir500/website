@@ -1,0 +1,8 @@
+# Redirect semua request ke /public
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    # Jika permintaan bukan langsung ke /public
+    RewriteCond %{REQUEST_URI} !^/public
+    RewriteRule ^(.*)$ public/$1 [L]
+</IfModule>
