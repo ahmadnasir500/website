@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\Setting;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
 
@@ -45,8 +46,11 @@ class HandleInertiaRequests extends Middleware
                 // 'user' => fn () => auth(),
             ],
             'website' =>[
-                'name' => config('app.name'),
+                'name' => Setting::where('key','website_name')->first()->value ?? config('app.name'),
                 'url' => config('app.url'),
+                'ads' => Setting::where('key','website_ads')->first()->value ?? null,
+                'description' => Setting::where('key','website_description')->first()->value ?? 'A Laravel Inertia Blog',
+                'author' => Setting::where('key','website_author')->first()->value,
             ]
         ]);
     }

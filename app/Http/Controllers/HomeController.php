@@ -48,6 +48,7 @@ class HomeController extends Controller
             ->orderBy('created_at', 'desc')
             ->limit(3)
             ->get();
+            
         $datas["seo"] = [
             'title' => SEOMeta::getTitle(),
             'description' => SEOMeta::getDescription(),

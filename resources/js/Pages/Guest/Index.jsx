@@ -2,6 +2,7 @@ import { Link, usePage } from "@inertiajs/react";
 import GuestLayout from "../Layouts/GuestLayout";
 import SimplePagination from "../Components/Pagination";
 import { useEffect, useRef, useState } from "react";
+import JuicyAds from "../Components/JuicyAds";
 
 const LazyArticle = ({ data }) => {
     const [visible, setVisible] = useState(false);
@@ -54,22 +55,7 @@ const Index = () => {
     const dataminimal = usePage().props.dataminimal;
 
         useEffect(() => {
-        // Load JuicyAds script
-        const script = document.createElement("script");
-        script.src = "https://poweredby.jads.co/js/jads.js";
-        script.async = true;
-        script.setAttribute("data-cfasync", "false");
-        document.body.appendChild(script);
 
-        // Push adzone after script loaded
-        script.onload = () => {
-            window.adsbyjuicy = window.adsbyjuicy || [];
-            window.adsbyjuicy.push({ adzone: 1102840 });
-        };
-
-        return () => {
-            document.body.removeChild(script);
-        };
     }, []);
     
     return (
@@ -77,9 +63,7 @@ const Index = () => {
             <div className="row mt-3">
                 <div className="col-12">
                     {/* <img src={"https://image-placeholder.com/images/actual-size/1024x600.png"} className="card-img-top" height={100} alt={`ads`} /> */}
-                    <div className="my-3 text-center">
-                        <ins id="1102840" data-width="728" data-height="90"></ins>
-                    </div>
+                    <JuicyAds />
                 </div>
             </div>
             <div className="row mt-3">
