@@ -8,9 +8,9 @@ export default function Create() {
     const imgPreview = useRef();
     const [data,setData] = useState({
         'title':'',
-        'body':'',
+        'content':'',
         'img_tmb':null,
-        'is_published': false
+        'status': false
     });
 
     useEffect(() => {
@@ -22,8 +22,8 @@ export default function Create() {
     const handleSubmit = () => {
         const formData = new FormData();
         formData.append('title', data.title);
-        formData.append('body', data.body);
-        formData.append('is_published', data.is_published ? 1 : 0);
+        formData.append('content', data.content);
+        formData.append('status', data.status ? 1 : 0);
         formData.append('img_tmb', data.img_tmb);
         router.post('/dashboard/post', formData, {
             forceFormData: true,
@@ -81,18 +81,18 @@ export default function Create() {
                             />
                         </div>
                         <div className="mb-3">
-                            <label htmlFor="body" className="form-label">Konten</label>
-                            <textarea className="form-control" id="body" name="body" rows="5" value={data.body} onChange={(e)=>setData({...data,'body':e.target.value})} required></textarea>
+                            <label htmlFor="content" className="form-label">Konten</label>
+                            <textarea className="form-control" id="content" name="content" rows="5" value={data.content} onChange={(e)=>setData({...data,'content':e.target.value})} required></textarea>
                         </div>
                         <div className="mb-3 form-check">
                             <input
                                 type="checkbox"
                                 className="form-check-input"
-                                id="is_published"
-                                checked={data.is_published}
-                                onChange={e => setData({ ...data, is_published: e.target.checked })}
+                                id="status"
+                                checked={data.status}
+                                onChange={e => setData({ ...data, status: e.target.checked })}
                             />
-                            <label className="form-check-label" htmlFor="is_published">Publish</label>
+                            <label className="form-check-label" htmlFor="status">Publish</label>
                         </div>
                         <button type="button" className="btn btn-primary" onClick={handleSubmit}>Submit</button>
                     </form>

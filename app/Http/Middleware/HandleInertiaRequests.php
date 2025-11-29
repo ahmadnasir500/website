@@ -46,11 +46,11 @@ class HandleInertiaRequests extends Middleware
                 // 'user' => fn () => auth(),
             ],
             'website' =>[
-                'name' => Setting::where('key','website_name')->first()->value ?? config('app.name'),
+                'name' => Setting::where('name','website_name')->first()->value ?? config('app.name'),
                 'url' => config('app.url'),
-                'ads' => Setting::where('key','website_ads')->first()->value ?? null,
-                'description' => Setting::where('key','website_description')->first()->value ?? 'A Laravel Inertia Blog',
-                'author' => Setting::where('key','website_author')->first()->value,
+                'ads' => Setting::where('name','website_ads')->first()->value ?? null,
+                'description' => Setting::where('name','website_description')->first()->value ?? 'A Laravel Inertia Blog',
+                'author' => Setting::where('name','website_author')->first()->value,
             ]
         ]);
     }

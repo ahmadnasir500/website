@@ -11,7 +11,7 @@ export default function Edit() {
         'title': data.title,
         'body': data.body ,
         'img_tmb': data.img_tmb,
-        'is_published': data.is_published
+        'status': data.status
     });
 
     useEffect(() => {
@@ -26,7 +26,7 @@ export default function Edit() {
         const formData = new FormData();
         formData.append('title', newData.title);
         formData.append('body', newData.body);
-        formData.append('is_published', newData.is_published ? 1 : 0);
+        formData.append('status', newData.status ? 1 : 0);
         if (newData.img_tmb instanceof File) {
             formData.append('img_tmb', newData.img_tmb);
         }
@@ -95,11 +95,11 @@ export default function Edit() {
                             <input
                                 type="checkbox"
                                 className="form-check-input"
-                                id="is_published"
-                                checked={data.is_published}
-                                onChange={e => setNewData({ ...newData, is_published: e.target.checked })}
+                                id="status"
+                                checked={data.status}
+                                onChange={e => setNewData({ ...newData, status: e.target.checked })}
                             />
-                            <label className="form-check-label" htmlFor="is_published">Publish</label>
+                            <label className="form-check-label" htmlFor="status">Publish</label>
                         </div>
                         <button type="button" className="btn btn-primary" onClick={handleSubmit}>Submit</button>
                     </form>

@@ -23,11 +23,20 @@ const Show = () => {
                             <img src={props.data.img_tmb ? "/images/" + props.data.img_tmb : "https://image-placeholder.com/images/actual-size/720x486.png"} className="card-img-top" alt={props.data.slug} />
                         </div>
                         <div className="col-12">
-                            {props.data.body}
+                            {props.data.content}
                         </div>
                     </div>
                 </div>
                 <div className="col-lg-4 right-col ps-lg-4 mt-3">
+                    <form className="mb-4">
+                        <div className="input-group">
+                            <input type="text" className="form-control" placeholder="Search..." aria-label="Search" />
+                            <button className="btn btn-primary" type="submit">
+                                <i data-feather="search"></i>
+                            </button>
+                        </div>
+                    </form>
+                    <h5 className="mb-3">Artikel Lainnya</h5>
                     {dataminimal.map((data, key) => (
                         <div className="article-item d-flex align-items-start mb-3" key={key}>
                             <img

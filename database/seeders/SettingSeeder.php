@@ -17,25 +17,25 @@ class SettingSeeder extends Seeder
     {
         $sub = [
             [
-                'key' => 'website_name',
+                'name' => 'website_name',
                 'value' => 'Gtmov.xyz',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
-                'key' => 'website_description',
+                'name' => 'website_description',
                 'value' => 'website seputar teknologi dan finansial',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
-                'key' => 'website_ads',
+                'name' => 'website_ads',
                 'value' => 'moderate',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
-                'key' => 'website_author',
+                'name' => 'website_author',
                 'value' => 'Ahmad Nasir',
                 'created_at' => now(),
                 'updated_at' => now(),

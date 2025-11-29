@@ -20,12 +20,12 @@ class PostSeeder extends Seeder
             [
                 "title" => "Zippyshare Quits After 17 Years (2006-2023)",
                 "slug" => (new SlugNormalizer())->normalize('Zippyshare Quits After 17 Years (2006-2023)'),
-                "is_published" => true
+                "status" => true
             ],
             [
                 "title" => "4 Easy Steps How To Fix HP Printer Error 49.4c02",
                 "slug" => (new SlugNormalizer())->normalize('4 Easy Steps How To Fix HP Printer Error 49.4c02'),
-                "is_published" => true
+                "status" => true
             ],
 
         ];

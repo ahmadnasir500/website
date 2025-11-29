@@ -18,10 +18,9 @@ return new class extends Migration
             $table->foreignId('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->string('title');
             $table->string('slug')->unique();
-            $table->text('excerpt');
-            $table->text('body');
             $table->text('img_tmb')->nullable();
-            $table->boolean('is_published')->nullable()->default(0);
+            $table->text('content');
+            $table->boolean('status')->default(false);
             $table->timestamps();
         });
     }

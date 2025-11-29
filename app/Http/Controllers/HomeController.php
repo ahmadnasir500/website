@@ -14,14 +14,14 @@ class HomeController extends Controller
     function index()
     {
 
-        $post = Post::where('is_published', true)
+        $post = Post::where('status', true)
             ->orderBy('created_at', 'desc')
             ->paginate(5);
 
         SEOTools::setTitle("Gtmov.xyz");
         SEOTools::setDescription("website seputar teknologi dan finansial");
 
-        $datas['dataminimal'] = Post::where('is_published', true)
+        $datas['dataminimal'] = Post::where('status', true)
             ->orderBy('created_at', 'desc')
             ->limit(3)
             ->get();
@@ -44,7 +44,7 @@ class HomeController extends Controller
 
         $datas['data'] = $post;
         $datas['url'] = $request->url ?? null;
-        $datas['dataminimal'] = Post::where('is_published', true)
+        $datas['dataminimal'] = Post::where('status', true)
             ->orderBy('created_at', 'desc')
             ->limit(3)
             ->get();

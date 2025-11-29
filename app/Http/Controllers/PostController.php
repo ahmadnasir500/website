@@ -18,7 +18,7 @@ class PostController extends Controller
      */
     public function index($page = 1)
     {
-        $data['datas'] = Post::where('user_id', auth()->id())
+        $data['datas'] = Post::where(['user_id' => auth()->id(), 'status' => true])
             ->orderBy('created_at', 'desc')
             ->paginate(10);
         return inertia('Dashboard/Post/Index', $data);
@@ -44,9 +44,9 @@ class PostController extends Controller
     {
         $validator = FacadesValidator::make($request->all(), [
             'title' => 'required|string|max:255',
-            'body' => 'required|string',
+            'content' => 'required|string',
             'img_tmb' => 'nullable|image|max:2048',
-            'is_published' => 'nullable|boolean',
+            'status' => 'required|boolean',
         ]);
 
         if ($validator->fails()) {
@@ -58,13 +58,12 @@ class PostController extends Controller
         $post->user_id = auth()->id();
         $post->title = $validated['title'];
         $post->slug = \Str::slug($validated['title']) . '-' . uniqid();
-        $post->excerpt = substr($validated['body'], 0, 200);
-        $post->body = $validated['body'];
+        $post->content = $validated['content'];
         if ($request->hasFile('img_tmb')) {
             $request->file('img_tmb')->move(public_path('images'), $request->file('img_tmb')->getClientOriginalName());
             $post->img_tmb = $request->file('img_tmb')->getClientOriginalName();
         }
-        $post->is_published = $validated['is_published'] ? 1 : 0;
+        $post->status = $validated['status'];
         $post->save();
 
         return redirect()->route('post.index')->with('flash.success', 'Post created successfully.');
@@ -103,6 +102,17 @@ class PostController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $validator = FacadesValidator::make($request->all(), [
+            'title' => 'required|string|max:255',
+            'content' => 'required|string',
+            'img_tmb' => 'nullable|image|max:2048',
+            'status' => 'required|boolean',
+        ]);
+        if ($validator->fails()) {
+            return Inertia::render('Dashboard/Post/Edit', ['data' => Post::findOrFail($id)])
+                ->with('flash.error', $validator->errors()->all());
+        }
+        $validated = $validator->validated();
         $post = Post::findOrFail($id);
         // hapus image jika ada
         if ($post->img_tmb && $request->hasFile('img_tmb')) {
@@ -111,9 +121,9 @@ class PostController extends Controller
                 unlink($imagePath);
             }
         }
-        $post->title = $request->input('title', $post->title);
-        $post->body = $request->input('body', $post->body);
-        $post->is_published = $request->input('is_published', $post->is_published);
+        $post->title = $validated['title'];
+        $post->content = $validated['content'];
+        $post->status = $validated['status'];
 
         if($request->hasFile('img_tmb')){
             $request->file('img_tmb')->move(public_path('images'), $request->file('img_tmb')->getClientOriginalName());

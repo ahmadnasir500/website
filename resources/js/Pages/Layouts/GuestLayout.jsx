@@ -41,20 +41,48 @@ const GuestLayout = ({ children }) => {
                     </button>
                     <div className="collapse navbar-collapse" id="navbarNav">
                         <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-                            <li className="nav-item">
-                                <Link className="nav-link text-white" href="/film/category/all">
-                                    Film
-                                </Link>
+                            <li className="nav-item dropdown">
+                                <button id="filmsDropdown"
+                                    className="nav-link dropdown-toggle text-white btn btn-link"
+                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                    Films
+                                </button>
+                                <ul className="dropdown-menu" aria-labelledby="filmsDropdown">
+                                    <li>
+                                        <Link className="dropdown-item" href="#">
+                                            comming soon
+                                        </Link>
+                                    </li>
+                                </ul>
                             </li>
-                            <li className="nav-item">
-                                <Link className="nav-link text-white" href="/about">
-                                    About
-                                </Link>
-                            </li>
-                            <li className="nav-item">
-                                <Link className="nav-link text-white" href="/contact">
-                                    Contact
-                                </Link>
+
+                            {/* Dropdown with submenu */}
+                            <li className="nav-item dropdown">
+                                <button
+                                    className="nav-link dropdown-toggle text-white btn btn-link"
+                                    id="legalDropdown"
+                                    data-bs-toggle="dropdown"
+                                    aria-expanded="false"
+                                >
+                                    Us
+                                </button>
+                                <ul className="dropdown-menu" aria-labelledby="legalDropdown">
+                                    <li>
+                                        <Link className="dropdown-item" href="/privacy-policy">
+                                            Privacy Policy
+                                        </Link>
+                                    </li>
+                                    <li>
+                                        <Link className="dropdown-item" href="/disclaimer">
+                                            Disclaimer
+                                        </Link>
+                                    </li>
+                                    <li>
+                                        <Link className="dropdown-item" href="/terms-and-conditions">
+                                            Terms and Conditions
+                                        </Link>
+                                    </li>
+                                </ul>
                             </li>
                         </ul>
                         <ul className="navbar-nav ms-auto mb-2 mb-lg-0">

@@ -21,9 +21,8 @@ class PostFactory extends Factory
             "user_id" => "1",
             "title" => $this->faker->sentence(),
             "slug" => (new SlugNormalizer())->normalize($this->faker->sentence()),
-            "is_published" => $this->faker->boolean(),
-            "excerpt" => $this->faker->paragraph(),
-            "body" => $this->faker->paragraph(),
+            "status" => true,
+            "content" => $this->faker->paragraph(),
             "img_tmb" => null,
         ];
     }

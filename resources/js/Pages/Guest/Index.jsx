@@ -54,16 +54,18 @@ const Index = () => {
     const datas = props.datas;
     const dataminimal = usePage().props.dataminimal;
 
-        useEffect(() => {
+    useEffect(() => {
 
     }, []);
-    
+
     return (
         <GuestLayout>
             <div className="row mt-3">
                 <div className="col-12">
                     {/* <img src={"https://image-placeholder.com/images/actual-size/1024x600.png"} className="card-img-top" height={100} alt={`ads`} /> */}
-                    <JuicyAds />
+                    {
+                        props.website.ads === 'moderate' && <JuicyAds />
+                    }
                 </div>
             </div>
             <div className="row mt-3">
