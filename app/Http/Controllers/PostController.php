@@ -6,8 +6,10 @@ use App\Http\Requests\PostRequest;
 use App\Models\Post;
 use Dotenv\Validator;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator as FacadesValidator;
 use Inertia\Inertia;
+use Intervention\Image\Facades\Image;
 
 class PostController extends Controller
 {
@@ -60,8 +62,13 @@ class PostController extends Controller
         $post->slug = \Str::slug($validated['title']) . '-' . uniqid();
         $post->content = $validated['content'];
         if ($request->hasFile('img_tmb')) {
-            $request->file('img_tmb')->move(public_path('images'), $request->file('img_tmb')->getClientOriginalName());
-            $post->img_tmb = $request->file('img_tmb')->getClientOriginalName();
+            $filename =  date('Y-m-d') . '-' . uniqid() . '.' . $request->file('img_tmb')->getClientOriginalExtension();
+            $imageStream = Image::make($request->file('img_tmb'))->resize(1024, 768, function ($constraint) {
+                $constraint->aspectRatio();
+                $constraint->upsize();
+            })->stream($request->file('img_tmb')->getClientOriginalExtension(), 80);
+            Storage::disk('public')->put('images/' . $filename, $imageStream);
+            $post->img_tmb = $filename;
         }
         $post->status = $validated['status'];
         $post->save();
@@ -116,7 +123,7 @@ class PostController extends Controller
         $post = Post::findOrFail($id);
         // hapus image jika ada
         if ($post->img_tmb && $request->hasFile('img_tmb')) {
-            $imagePath = public_path('images/' . $post->img_tmb);
+            $imagePath = public_path('storage/images/' . $post->img_tmb);
             if (file_exists($imagePath)) {
                 unlink($imagePath);
             }
@@ -125,9 +132,14 @@ class PostController extends Controller
         $post->content = $validated['content'];
         $post->status = $validated['status'];
 
-        if($request->hasFile('img_tmb')){
-            $request->file('img_tmb')->move(public_path('images'), $request->file('img_tmb')->getClientOriginalName());
-            $post->img_tmb = $request->file('img_tmb')->getClientOriginalName();
+        if ($request->hasFile('img_tmb')) {
+            $filename =  date('Y-m-d') . '-' . uniqid() . '.' . $request->file('img_tmb')->getClientOriginalExtension();
+            $imageStream = Image::make($request->file('img_tmb'))->resize(1024, 768, function ($constraint) {
+                $constraint->aspectRatio();
+                $constraint->upsize();
+            })->stream($request->file('img_tmb')->getClientOriginalExtension(), 80);
+            Storage::disk('public')->put('images/' . $filename, $imageStream);
+            $post->img_tmb = $filename;
         }
         $post->save();
         $data['data'] = $post;
@@ -147,7 +159,7 @@ class PostController extends Controller
         $post = Post::findOrFail($id);
 
         if ($post->img_tmb) {
-            $imagePath = public_path('images/' . $post->img_tmb);
+            $imagePath = public_path('storage/images/' . $post->img_tmb);
             if (file_exists($imagePath)) {
                 unlink($imagePath);
             }

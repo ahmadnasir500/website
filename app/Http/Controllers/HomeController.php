@@ -16,7 +16,7 @@ class HomeController extends Controller
 
         $post = Post::where('status', true)
             ->orderBy('created_at', 'desc')
-            ->paginate(5);
+            ->paginate(6);
 
         SEOTools::setTitle("Gtmov.xyz");
         SEOTools::setDescription("website seputar teknologi dan finansial");

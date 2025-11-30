@@ -16,7 +16,7 @@ export default function Edit() {
 
     useEffect(() => {
         if (newData.img_tmb) {
-            imgPreview.current.src = `/images/${newData.img_tmb}`;
+            imgPreview.current.src = `/storage/images/${newData.img_tmb}`;
             imgPreview.current.style.display = 'block';
         }
     }, []);

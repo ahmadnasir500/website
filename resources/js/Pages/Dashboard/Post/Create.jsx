@@ -1,15 +1,16 @@
 import AdminLayout from "@/Pages/Layouts/AdminLayout"
-import { Link, router, usePage } from "@inertiajs/react";
+import { Head, Link, router, usePage } from "@inertiajs/react";
 import { useEffect, useRef, useState } from "react";
 import toast from "react-hot-toast";
 
 export default function Create() {
     const flash = usePage().props.flash;
     const imgPreview = useRef();
-    const [data,setData] = useState({
-        'title':'',
-        'content':'',
-        'img_tmb':null,
+    const quillRef = useRef();
+    const [data, setData] = useState({
+        'title': '',
+        'content': '',
+        'img_tmb': null,
         'status': false
     });
 
@@ -18,6 +19,30 @@ export default function Create() {
             imgPreview.current.src = flash.image;
         }
     }, [flash]);
+
+    useEffect(() => {
+        if (window.Quill) {
+            quillRef.current = new window.Quill('#quill', {
+                theme: 'snow'
+            });
+
+            // If there's initial content, load it into the editor
+            if (data.content) {
+                quillRef.current.root.innerHTML = data.content;
+            }
+
+            quillRef.current.on('text-change', function () {
+                setData(prev => ({ ...prev, content: quillRef.current.root.innerHTML }));
+            });
+        }
+
+        return () => {
+            // cleanup reference
+            if (quillRef.current) {
+                quillRef.current = null;
+            }
+        };
+    }, []);
 
     const handleSubmit = () => {
         const formData = new FormData();
@@ -30,7 +55,7 @@ export default function Create() {
             onSuccess: (page) => {
                 // The process_id will be available in flash message after redirect
                 // Progress tracking will start automatically via useEffect
-                
+
                 if (flash.success) {
                     toast.success(flash.success);
                 } else if (flash.error) {
@@ -54,6 +79,10 @@ export default function Create() {
     }
     return (
         <AdminLayout>
+            <Head title="Create Post - Dashboard">
+                <link href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css" rel="stylesheet" />
+                <script src="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.js"></script>
+            </Head>
             <div className="container">
                 <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
                     <h1 className="h2">Halaman Tambah</h1>
@@ -67,11 +96,11 @@ export default function Create() {
                     <form>
                         <div className="mb-3">
                             <label htmlFor="title" className="form-label">Title</label>
-                            <input type="text" className="form-control" value={data.title} onChange={(e)=>setData({...data,'title':e.target.value})} id="title" required />
+                            <input type="text" className="form-control" value={data.title} onChange={(e) => setData({ ...data, 'title': e.target.value })} id="title" required />
                         </div>
                         <div className="mb-3">
                             <label htmlFor="img-preview" className="form-label">Gambar dari Informasi <span style={{ color: "red" }} className="form-text">1060*750</span></label>
-                            <img className="img-preview img-fluid mb-3 col-sm-5" ref={imgPreview}/>
+                            <img className="img-preview img-fluid mb-3 col-sm-5" ref={imgPreview} />
                             <input
                                 id="img-preview"
                                 type="file"
@@ -81,8 +110,8 @@ export default function Create() {
                             />
                         </div>
                         <div className="mb-3">
-                            <label htmlFor="content" className="form-label">Konten</label>
-                            <textarea className="form-control" id="content" name="content" rows="5" value={data.content} onChange={(e)=>setData({...data,'content':e.target.value})} required></textarea>
+                            <label htmlFor="quill" className="form-label">Konten</label>
+                            <div id="quill" style={{ minHeight: '300px' }} />
                         </div>
                         <div className="mb-3 form-check">
                             <input

@@ -37,7 +37,7 @@ const LazyArticle = ({ data }) => {
             ) : (
                 <div className="card border-0">
                     <Link href={`/news/${data.slug}`}>
-                        <img src={data.img_tmb ? "/images/" + data.img_tmb : "https://image-placeholder.com/images/actual-size/720x486.png"} className="card-img-top" alt={data.title} />
+                        <img src={data.img_tmb ? "/storage/images/" + data.img_tmb : "https://image-placeholder.com/images/actual-size/720x486.png"} className="card-img-top" alt={data.title} />
                         <div className="card-body p-0 pt-2">
                             <h6 className="article-title">{data.title}</h6>
                             <p className="article-desc">{data.excerpt}</p>
@@ -79,7 +79,7 @@ const Index = () => {
                                     <div className="col-md-6" key={key}>
                                         <div className="card border-0">
                                             <Link href={`/news/${data.slug}`}>
-                                                <img src={data.img_tmb ? "/images/" + data.img_tmb : "https://image-placeholder.com/images/actual-size/720x486.png"} className="card-img-top" alt={data.title} />
+                                                <img src={data.img_tmb ? "/storage/images/" + data.img_tmb : "https://image-placeholder.com/images/actual-size/720x486.png"} className="card-img-top" alt={data.title} />
                                                 <div className="card-body p-0 pt-2">
                                                     <h6 className="article-title">{data.title}</h6>
                                                     <p className="article-desc">{data.excerpt}</p>
@@ -103,10 +103,11 @@ const Index = () => {
                     </div>
                 </div>
                 <div className="col-lg-4 col-md-12 right-col ps-lg-4 mt-3">
+                    <h5 className="mb-3">Artikel Lainnya</h5>
                     {dataminimal.map((data, key) => (
                         <div className="article-item d-flex align-items-start mb-3" key={key}>
                             <img
-                                src={data.img_tmb ? "/images/" + data.img_tmb : "https://image-placeholder.com/images/actual-size/300x119.png"}
+                                src={data.img_tmb ? "/storage/images/" + data.img_tmb : "https://image-placeholder.com/images/actual-size/300x119.png"}
                                 className="article-thumb rounded me-3"
                                 width="70"
                                 alt={data.slug}

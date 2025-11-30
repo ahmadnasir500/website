@@ -1,12 +1,22 @@
 import { usePage } from "@inertiajs/react";
 import GuestLayout from "../Layouts/GuestLayout";
 import Safelink from "../Components/Safelink";
+import PageLoader from "../Components/PageLoader";
+import { useEffect, useState } from "react";
 
 const Show = () => {
     const props = usePage().props;
     const dataminimal = props.dataminimal;
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const t = setTimeout(() => setLoading(false), 1000); // max 3s
+        return () => clearTimeout(t);
+    }, []);
+    
     return (
         <GuestLayout>
+            <PageLoader visible={loading} message="Memuat artikel..." />
             <div className="row mt-3">
                 <div className="col-12">
                     <img src={"https://image-placeholder.com/images/actual-size/1024x600.png"} className="card-img-top" height={100} alt={`ads`} />
@@ -16,18 +26,16 @@ const Show = () => {
             <h3 className="mb-3">{props.data.title}</h3>
             <p className="text-muted mb-4">Diposting pada {new Date(props.data.created_at).toLocaleDateString('id-ID', { year: 'numeric', month: 'long', day: 'numeric' })}</p>
             <hr className="my-4" />
-            <div className="row">
+            <div className="row ">
                 <div className="col-8">
                     <div className="row">
                         <div className="col-12">
-                            <img src={props.data.img_tmb ? "/images/" + props.data.img_tmb : "https://image-placeholder.com/images/actual-size/720x486.png"} className="card-img-top" alt={props.data.slug} />
+                            <img src={props.data.img_tmb ? "/storage/images/" + props.data.img_tmb : "https://image-placeholder.com/images/actual-size/720x486.png"} className="card-img-top" alt={props.data.slug} />
                         </div>
-                        <div className="col-12">
-                            {props.data.content}
-                        </div>
+                        <div className="col-12" dangerouslySetInnerHTML={{ __html: props.data.content }} />
                     </div>
                 </div>
-                <div className="col-lg-4 right-col ps-lg-4 mt-3">
+                <div className="col-lg-4 right-col ps-lg-4 mt-3 ">
                     <form className="mb-4">
                         <div className="input-group">
                             <input type="text" className="form-control" placeholder="Search..." aria-label="Search" />
@@ -40,7 +48,7 @@ const Show = () => {
                     {dataminimal.map((data, key) => (
                         <div className="article-item d-flex align-items-start mb-3" key={key}>
                             <img
-                                src={data.img_tmb ? "/images/" + data.img_tmb : "https://image-placeholder.com/images/actual-size/300x119.png"}
+                                src={data.img_tmb ? "/storage/images/" + data.img_tmb : "https://image-placeholder.com/images/actual-size/300x119.png"}
                                 className="article-thumb rounded me-3"
                                 width="70"
                                 alt={data.slug}
